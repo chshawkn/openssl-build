@@ -3,17 +3,20 @@
 set -u
 
 #https://www.openssl.org/source/openssl-1.0.2k.tar.gz
+#: "${LIB_NAME:=openssl-1.0.2k}"
+: "${LIB_NAME:=openssl-1.1.0c}"
 #https://github.com/openssl/openssl/archive/OpenSSL_1_0_2k.tar.gz
-LIB_NAME="OpenSSL_1_0_2k"
+#LIB_NAME="OpenSSL_1_0_2k"
 ARCHIVE="${LIB_NAME}.tar.gz"
-ARCHIVE_URL="https://github.com/openssl/openssl/archive/${ARCHIVE}"
-#ARCHIVE_URL="https://www.openssl.org/source/${ARCHIVE}"
+ARCHIVE_URL="https://www.openssl.org/source/${ARCHIVE}"
+#ARCHIVE_URL="https://github.com/openssl/openssl/archive/${ARCHIVE}"
 #[ -f "${LIB_NAME}.tar.gz" ] || wget ${ARCHIVE_URL};
 [ -f "${ARCHIVE}" ] || aria2c --file-allocation=none -c -x 10 -s 10 -m 0 --console-log-level=notice --log-level=notice --summary-interval=0 -d "$(pwd)" -o "${ARCHIVE}" "${ARCHIVE_URL}"
 
 source ./android.sh
 LIB_DEST_DIR=${TOOLS_ROOT}/libs
 [ -d ${LIB_DEST_DIR} ] && rm -rf ${LIB_DEST_DIR}
+FILTER="${script_path}/filter"
 
 # Unarchive library, then configure and make for specified architectures
 function configure_make() {
@@ -48,13 +51,13 @@ function configure_make() {
         zlib \
         no-asm \
         no-shared \
-        no-unit-test
+        no-unit-test | ${FILTER}
     PATH=$TOOLCHAIN_PATH:$PATH
 
-    if make -j4; then
-        make install
+    if make -j4 | ${FILTER}; then
+        make install | ${FILTER}
 
-        OUTPUT_ROOT="${TOOLS_ROOT}/../output/${LIB_NAME}-android-${ABI_OR_RUST_ARCH}"
+        OUTPUT_ROOT="${TOOLS_ROOT}/../target/${LIB_NAME}-android-${ABI_OR_RUST_ARCH}"
         [ -d ${OUTPUT_ROOT}/include ] || mkdir -p ${OUTPUT_ROOT}/include
         cp -r ${PREFIX_DIR}/include/openssl ${OUTPUT_ROOT}/include
 

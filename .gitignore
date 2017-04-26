@@ -2,12 +2,10 @@
 .DS_Store
 
 *.tar.gz
-output/
+target/
 *~
 include/
-lib/
-*android-toolchain*
-scripts/libs
 scripts/curl*
+scripts/libs
 scripts/openssl*
 scripts/protobuf*

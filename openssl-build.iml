@@ -19,7 +19,9 @@
       <excludeFolder url="file://$MODULE_DIR$/scripts/libs" />
       <excludeFolder url="file://$MODULE_DIR$/scripts/mips-android-toolchain" />
       <excludeFolder url="file://$MODULE_DIR$/scripts/mips64-android-toolchain" />
+      <excludeFolder url="file://$MODULE_DIR$/scripts/openssl-1.1.0c" />
       <excludeFolder url="file://$MODULE_DIR$/scripts/x86_64-android-toolchain" />
+      <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

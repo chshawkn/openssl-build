@@ -10,14 +10,30 @@ before_install:
 - brew tap caskroom/cask
 - curl https://sh.rustup.rs -sSf | sh
 
+branches:
+  only:
+  - master
+  - /^release\/.*$/
+  - /^v\d+\.\d+(\.\d+)?(-\S*)?/
+
 cache:
   directories:
   - $HOME/.gradle/caches/
   - $HOME/.gradle/wrapper/
   - $HOME/.android/build-cache
 
+deploy:
+  provider: releases
+  api_key: $GITHUB_GIT_SERVICE_TOKEN
+  file_glob: true
+  file: target/openssl-1.1.0c-*.tar.gz
+  skip_cleanup: true
+  on:
+    tags: true
+
 env:
   global:
+  - LIB_NAME="openssl-1.1.0c"
   - RUST_IOS_ARCHS="aarch64 armv7 armv7s i386 x86_64"
   - RUST_AND_ARCHS="aarch64 armv7 arm i686"
 

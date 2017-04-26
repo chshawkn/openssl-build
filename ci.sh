@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
-cd scripts
+: "${LIB_NAME:=openssl-1.1.0c}"
 
-sh ./build-openssl-ios.sh
-sh ./build-openssl-android.sh
+(cd scripts; sh ./build-openssl-ios.sh)
+(cd scripts; sh ./build-openssl-android.sh)
+
+source ./scripts/package.sh
+(cd target; package "." "${LIB_NAME}")

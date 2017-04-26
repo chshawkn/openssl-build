@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-TOOLS_ROOT=`pwd`
+source ./common.sh
+TOOLS_ROOT="${script_path}/../target"
 AND_ARCHS=("android" "android-armeabi" "android64-aarch64" "android-x86" "android64" "android-mips" "android-mips64")
 #AND_ABIS=("armeabi" "armeabi-v7a" "arm64-v8a" "x86" "x86_64" "mips" "mips64")
 AND_RUST_STYLE_ARCHS=("arm" "armv7" "aarch64" "i686" "x86_64" "mips" "mips64")
