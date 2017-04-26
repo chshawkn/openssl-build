@@ -1,0 +1,13 @@
+
+.DS_Store
+
+*.tar.gz
+output/
+*~
+include/
+lib/
+*android-toolchain*
+scripts/libs
+scripts/curl*
+scripts/openssl*
+scripts/protobuf*

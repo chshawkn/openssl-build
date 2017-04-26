@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="WEB_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/output" />
+      <excludeFolder url="file://$MODULE_DIR$/scripts/OpenSSL_1_0_2k" />
+      <excludeFolder url="file://$MODULE_DIR$/scripts/aarch64-android-toolchain" />
+      <excludeFolder url="file://$MODULE_DIR$/scripts/android-toolchain-aarch64" />
+      <excludeFolder url="file://$MODULE_DIR$/scripts/android-toolchain-arm" />
+      <excludeFolder url="file://$MODULE_DIR$/scripts/android-toolchain-armv7" />
+      <excludeFolder url="file://$MODULE_DIR$/scripts/android-toolchain-i686" />
+      <excludeFolder url="file://$MODULE_DIR$/scripts/android-toolchain-mips" />
+      <excludeFolder url="file://$MODULE_DIR$/scripts/android-toolchain-mips64" />
+      <excludeFolder url="file://$MODULE_DIR$/scripts/android-toolchain-x86_64" />
+      <excludeFolder url="file://$MODULE_DIR$/scripts/arm-android-toolchain" />
+      <excludeFolder url="file://$MODULE_DIR$/scripts/armv7-android-toolchain" />
+      <excludeFolder url="file://$MODULE_DIR$/scripts/i686-android-toolchain" />
+      <excludeFolder url="file://$MODULE_DIR$/scripts/libs" />
+      <excludeFolder url="file://$MODULE_DIR$/scripts/mips-android-toolchain" />
+      <excludeFolder url="file://$MODULE_DIR$/scripts/mips64-android-toolchain" />
+      <excludeFolder url="file://$MODULE_DIR$/scripts/x86_64-android-toolchain" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>

@@ -1,0 +1,50 @@
+
+language: cpp
+
+before_cache:
+- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -rf $HOME/.gradle/caches/*/plugin-resolution/
+
+before_install:
+- brew update
+- brew tap caskroom/cask
+- curl https://sh.rustup.rs -sSf | sh
+
+cache:
+  directories:
+  - $HOME/.gradle/caches/
+  - $HOME/.gradle/wrapper/
+  - $HOME/.android/build-cache
+
+env:
+  global:
+  - RUST_IOS_ARCHS="aarch64 armv7 armv7s i386 x86_64"
+  - RUST_AND_ARCHS="aarch64 armv7 arm i686"
+
+install:
+#- brew cask install android-sdk
+- brew cask install android-ndk
+- rustup toolchain install stable-x86_64-apple-darwin
+#- rustup target list
+- rustup target add i686-apple-darwin
+- rustup target add aarch64-linux-android
+- rustup target add arm-linux-androideabi
+- rustup target add armv7-linux-androideabi
+- rustup target add i686-linux-android
+- rustup target add aarch64-apple-ios
+- rustup target add armv7-apple-ios
+- rustup target add armv7s-apple-ios
+- rustup target add i386-apple-ios
+- rustup target add x86_64-apple-ios
+
+#matrix:
+#  exclude:
+
+os:
+- osx
+
+osx_image: xcode8.3
+
+script:
+- sh ci.sh
+#- cargo build --target=arm-linux-androideabi
