@@ -60,12 +60,12 @@ os:
 osx_image: xcode8.3
 
 script:
-# before_install
+- echo before_install
 - brew update
 # see: https://caskroom.github.io/
 - brew tap caskroom/cask
 - curl https://sh.rustup.rs -sSf | sh -s -- -y
-# install:
+- echo install
 #- brew cask install android-ndk
 #- rustup toolchain install stable-x86_64-apple-darwin
 #- rustup target add i686-apple-darwin
@@ -78,6 +78,6 @@ script:
 #- rustup target add armv7s-apple-ios
 #- rustup target add i386-apple-ios
 #- rustup target add x86_64-apple-ios
-# script
+- echo script
 - sh ci.sh
 #- cargo build --target=arm-linux-androideabi
