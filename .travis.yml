@@ -9,7 +9,7 @@ before_cache:
 before_install:
 - echo before_install
 - brew update
-- brew install bash
+- brew install aria2 bash
 # see: https://caskroom.github.io/
 - brew tap caskroom/cask
 #- brew cask install android-sdk
