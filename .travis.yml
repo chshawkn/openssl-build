@@ -16,7 +16,7 @@ before_install:
 - curl https://sh.rustup.rs -sSf | sh -s -- -y
 - ls -l $HOME/.cargo/bin
 ##- rustup target list
-- export PATH=$PATH:$HOME/.cargo/bin
+- export PATH="$PATH:$HOME/.cargo/bin"
 - echo PATH=$PATH
 - rustup toolchain install stable-x86_64-apple-darwin
 - rustup target add i686-apple-darwin
@@ -79,6 +79,6 @@ osx_image: xcode8.3
 
 script:
 - echo script
-- export PATH=$PATH:$HOME/.cargo/bin
+- export PATH="$PATH:$HOME/.cargo/bin"
 - cd scripts; bash ci.sh
 #- cargo build --target=arm-linux-androideabi
