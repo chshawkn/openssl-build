@@ -2,19 +2,20 @@
 
 source ./common.sh
 TOOLS_ROOT="${script_path}/../target"
-AND_ARCHS=("android" "android-armeabi" "android64-aarch64" "android-x86" "android64" "android-mips" "android-mips64")
-#AND_ABIS=("armeabi" "armeabi-v7a" "arm64-v8a" "x86" "x86_64" "mips" "mips64")
-AND_RUST_STYLE_ARCHS=("arm" "armv7" "aarch64" "i686" "x86_64" "mips" "mips64")
+if [[ ! -v AND_ARCHS ]]; then
+    : "${AND_ARCHS:=android android-armeabi android64-aarch64 android-x86 android64 android-mips android-mips64}"
+fi
+AND_ARCHS_ARRAY=(${AND_ARCHS})
 # API 21 is the minimum requirement for 64 bit archs.
 ANDROID_API=${ANDROID_API:-22}
 # see: http://stackoverflow.com/questions/11362250/in-bash-how-do-i-test-if-a-variable-is-defined-in-u-mode
 : "${ANDROID_NDK_HOME:=/usr/local/opt/android-ndk}"
 NDK="${ANDROID_NDK_HOME}"
 
-function configure() {
+function android_configure() {
     # ARCH must expose for build scripts
     ARCH=$1;
-    local ABI_OR_RUST_ARCH=$2;
+    local ABI_OR_RUST_ARCH=$(abi_or_rust_arch "${ARCH}");
     local CLANG=${3:-""};
 
     local TOOLCHAIN_ROOT=${TOOLS_ROOT}/android-toolchain-${ABI_OR_RUST_ARCH}

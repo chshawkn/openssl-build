@@ -1,11 +1,13 @@
 
 .DS_Store
-
-*.tar.gz
-target/
 *~
+
+openssl*
+
+target/
+*.tar.gz
 include/
+
 scripts/curl*
 scripts/libs
-scripts/openssl*
 scripts/protobuf*

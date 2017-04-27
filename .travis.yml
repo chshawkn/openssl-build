@@ -8,12 +8,14 @@ before_cache:
 before_install:
 - echo before_install
 - brew update
+- brew install bash
 # see: https://caskroom.github.io/
 - brew tap caskroom/cask
 ##- brew cask install android-sdk
 - brew cask install android-ndk
 - curl https://sh.rustup.rs -sSf | sh -s -- -y
 ##- rustup target list
+- export PATH=$PATH:$HOME/.cargo/bin
 - rustup toolchain install stable-x86_64-apple-darwin
 - rustup target add i686-apple-darwin
 - rustup target add aarch64-linux-android
@@ -52,6 +54,15 @@ env:
   - LIB_NAME="openssl-1.1.0c"
   - RUST_IOS_ARCHS="aarch64 armv7 armv7s i386 x86_64"
   - RUST_AND_ARCHS="aarch64 armv7 arm i686"
+- IOS_ARCHS="arm64" AND_ARCHS=""
+- IOS_ARCHS="armv7s" AND_ARCHS=""
+- IOS_ARCHS="armv7" AND_ARCHS=""
+- IOS_ARCHS="i386" AND_ARCHS=""
+- IOS_ARCHS="x86_64" AND_ARCHS=""
+- IOS_ARCHS="" AND_ARCHS="android"
+- IOS_ARCHS="" AND_ARCHS="android-armeabi"
+- IOS_ARCHS="" AND_ARCHS="android64-aarch64"
+- IOS_ARCHS="" AND_ARCHS="android-x86"
 
 install: true
 
@@ -65,5 +76,6 @@ osx_image: xcode8.3
 
 script:
 - echo script
-- sh ci.sh
+- export PATH=$PATH:$HOME/.cargo/bin
+- cd scripts; bash ci.sh
 #- cargo build --target=arm-linux-androideabi

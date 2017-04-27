@@ -2,11 +2,11 @@
 
 set -u
 
-#https://www.openssl.org/source/openssl-1.0.2k.tar.gz
+#https://www.openssl.org/source/openssl-1.1.0c.tar.gz
 #: "${LIB_NAME:=openssl-1.0.2k}"
 : "${LIB_NAME:=openssl-1.1.0c}"
-#https://github.com/openssl/openssl/archive/OpenSSL_1_0_2k.tar.gz
-#LIB_NAME="OpenSSL_1_0_2k"
+#https://github.com/openssl/openssl/archive/OpenSSL_1_1_0c.tar.gz
+#LIB_NAME="OpenSSL_1_1_0c"
 ARCHIVE="${LIB_NAME}.tar.gz"
 ARCHIVE_URL="https://www.openssl.org/source/${ARCHIVE}"
 #ARCHIVE_URL="https://github.com/openssl/openssl/archive/${ARCHIVE}"
@@ -28,8 +28,8 @@ function configure_make() {
     tar xzf "${LIB_NAME}.tar.gz" --strip-components=1 -C "${LIB_NAME}"
     pushd "${LIB_NAME}"
 
-    echo "configure $*"
-    configure $*
+    echo "android_configure $*"
+    android_configure $*
 
     #support openssl-1.0.x
     if [[ $LIB_NAME != "openssl-1.1.*" ]]; then
@@ -68,13 +68,14 @@ function configure_make() {
     popd
 }
 
-for ((i=0; i < ${#AND_ARCHS[@]}; i++))
+for ((i=0; i < ${#AND_ARCHS_ARRAY[@]}; i++))
 do
-    echo "\${AND_ARCHS[$i]} ${AND_ARCHS[i]}"
-    if [[ $# -eq 0 ]] || [[ "$1" == "${AND_ARCHS[i]}" ]]; then
+    echo "\${AND_ARCHS[$i]} ${AND_ARCHS_ARRAY[i]}"
+    if [[ $# -eq 0 ]] || [[ "$1" == "${AND_ARCHS_ARRAY[i]}" ]]; then
         # Do not build 64 bit arch if ANDROID_API is less than 21 which is
         # the minimum supported API level for 64 bit.
-        [[ ${ANDROID_API} < 21 ]] && ( echo "${AND_RUST_STYLE_ARCHS[i]}" | grep 64 > /dev/null ) && continue;
-        configure_make "${AND_ARCHS[i]}" "${AND_RUST_STYLE_ARCHS[i]}"
+        ABI_OR_RUST_ARCH=$(abi_or_rust_arch "${ARCH}");
+        [[ ${ANDROID_API} < 21 ]] && ( echo "${ABI_OR_RUST_ARCH}" | grep 64 > /dev/null ) && continue;
+        configure_make "${AND_ARCHS_ARRAY[i]}" "${ABI_OR_RUST_ARCH}"
     fi
 done
