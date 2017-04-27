@@ -11,11 +11,11 @@ before_install:
 - brew install bash
 # see: https://caskroom.github.io/
 - brew tap caskroom/cask
-##- brew cask install android-sdk
+#- brew cask install android-sdk
 - brew cask install android-ndk
 - curl https://sh.rustup.rs -sSf | sh -s -- -y
 - ls -l $HOME/.cargo/bin
-##- rustup target list
+#- rustup target list
 - export PATH="$PATH:$HOME/.cargo/bin"
 - echo PATH=$PATH
 - rustup toolchain install stable-x86_64-apple-darwin
@@ -42,6 +42,7 @@ cache:
   - $HOME/.gradle/caches/
   - $HOME/.gradle/wrapper/
   - $HOME/.android/build-cache
+  - $HOME/Library/Caches/Homebrew
 
 deploy:
   provider: releases
@@ -53,10 +54,6 @@ deploy:
     tags: true
 
 env:
-  global:
-  - LIB_NAME="openssl-1.1.0c"
-  - RUST_IOS_ARCHS="aarch64 armv7 armv7s i386 x86_64"
-  - RUST_AND_ARCHS="aarch64 armv7 arm i686"
 - IOS_ARCHS="arm64" AND_ARCHS=""
 - IOS_ARCHS="armv7s" AND_ARCHS=""
 - IOS_ARCHS="armv7" AND_ARCHS=""
@@ -66,6 +63,10 @@ env:
 - IOS_ARCHS="" AND_ARCHS="android-armeabi"
 - IOS_ARCHS="" AND_ARCHS="android64-aarch64"
 - IOS_ARCHS="" AND_ARCHS="android-x86"
+  global:
+  - LIB_NAME="openssl-1.1.0c"
+  - RUST_IOS_ARCHS="aarch64 armv7 armv7s i386 x86_64"
+  - RUST_AND_ARCHS="aarch64 armv7 arm i686"
 
 install: true
 
