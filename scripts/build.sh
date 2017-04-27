@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 : "${LIB_NAME:=openssl-1.1.0c}"
 
 echo "building ${LIB_NAME}"
@@ -33,4 +35,4 @@ if [[ $# -eq 0 && ${#IOS_ARCHS_ARRAY[@]} -gt 1 ]]; then
     create_universal_lib "libssl.a" "${UNIVERSAL_LIB_DIR}/libssl.a"
 fi
 
-(cd target; package "." "${LIB_NAME}")
+(cd ../target; package "." "${LIB_NAME}")

@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+set -e
 set -u
 
 #https://www.openssl.org/source/openssl-1.1.0c.tar.gz
