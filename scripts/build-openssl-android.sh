@@ -56,9 +56,13 @@ function configure_make() {
     PATH=$TOOLCHAIN_PATH:$PATH
 
     if make -j4 | ${FILTER}; then
+        echo "make done. $(pwd)"
+        set +e
         make install | ${FILTER}
+        set -e
+        echo "make install done. $(pwd)"
 
-        OUTPUT_ROOT="${TOOLS_ROOT}/../target/${LIB_NAME}-android-${ABI_OR_RUST_ARCH}"
+        local OUTPUT_ROOT="${TOOLS_ROOT}/../target/${LIB_NAME}-android-${ABI_OR_RUST_ARCH}"
         [ -d ${OUTPUT_ROOT}/include ] || mkdir -p ${OUTPUT_ROOT}/include
         cp -r ${PREFIX_DIR}/include/openssl ${OUTPUT_ROOT}/include
 
@@ -75,7 +79,7 @@ do
     if [[ $# -eq 0 ]] || [[ "$1" == "${AND_ARCHS_ARRAY[i]}" ]]; then
         # Do not build 64 bit arch if ANDROID_API is less than 21 which is
         # the minimum supported API level for 64 bit.
-        ABI_OR_RUST_ARCH=$(abi_or_rust_arch "${ARCH}");
+        ABI_OR_RUST_ARCH=$(abi_or_rust_arch "${AND_ARCHS_ARRAY[i]}");
         [[ ${ANDROID_API} < 21 ]] && ( echo "${ABI_OR_RUST_ARCH}" | grep 64 > /dev/null ) && continue;
         configure_make "${AND_ARCHS_ARRAY[i]}" "${ABI_OR_RUST_ARCH}"
     fi

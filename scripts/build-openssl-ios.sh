@@ -68,8 +68,13 @@ function  configure_make() {
     export CFLAGS="-isysroot ${CROSS_TOP}/SDKs/${CROSS_SDK}"
 
     if make -j8 | ${FILTER}; then
-        make install | ${FILTER}; popd;
-        rm -fr "${LIB_NAME}"
+        echo "make done. $(pwd)"
+        set +e
+        make install | ${FILTER}
+        set -e
+        echo "make install done. $(pwd)"
+        popd
+        rm -rf "${LIB_NAME}"
     fi
 }
 

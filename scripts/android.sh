@@ -14,7 +14,7 @@ NDK="${ANDROID_NDK_HOME}"
 
 function android_configure() {
     # ARCH must expose for build scripts
-    ARCH=$1;
+    local ARCH=$1;
     local ABI_OR_RUST_ARCH=$(abi_or_rust_arch "${ARCH}");
     local CLANG=${3:-""};
 
