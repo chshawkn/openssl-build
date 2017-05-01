@@ -46,32 +46,23 @@ cache:
   - $HOME/.android/build-cache
   - $HOME/Library/Caches/Homebrew
 
-deploy:
-  provider: releases
-  api_key: $GITHUB_GIT_SERVICE_TOKEN
-  file_glob: true
-  file: target/openssl-1.1.0c-*.tar.gz
-  skip_cleanup: true
-  on:
-    tags: true
-
 env:
   global:
   - LIB_NAME="openssl-1.1.0c"
   - RUST_IOS_ARCHS="aarch64 armv7 armv7s i386 x86_64"
   - RUST_AND_ARCHS="aarch64 armv7 arm i686"
   matrix:
-  - IOS_ARCHS="arm64" AND_ARCHS=""
-  - IOS_ARCHS="armv7s" AND_ARCHS=""
-  - IOS_ARCHS="armv7" AND_ARCHS=""
-  - IOS_ARCHS="i386" AND_ARCHS=""
-  - IOS_ARCHS="x86_64" AND_ARCHS=""
-  - IOS_ARCHS="" AND_ARCHS="android"
-  - IOS_ARCHS="" AND_ARCHS="android-armeabi"
-  #- IOS_ARCHS="" AND_ARCHS="android-mips"
-  - IOS_ARCHS="" AND_ARCHS="android-x86"
-  - IOS_ARCHS="" AND_ARCHS="android64"
-  - IOS_ARCHS="" AND_ARCHS="android64-aarch64"
+  - AND_ARCHS="android" IOS_ARCHS=""
+  - AND_ARCHS="android-armeabi" IOS_ARCHS=""
+  #- AND_ARCHS="android-mips" IOS_ARCHS=""
+  - AND_ARCHS="android-x86" IOS_ARCHS=""
+  - AND_ARCHS="android64" IOS_ARCHS=""
+  - AND_ARCHS="android64-aarch64" IOS_ARCHS=""
+  - AND_ARCHS="" IOS_ARCHS="arm64"
+  - AND_ARCHS="" IOS_ARCHS="armv7s"
+  - AND_ARCHS="" IOS_ARCHS="armv7"
+  - AND_ARCHS="" IOS_ARCHS="i386"
+  - AND_ARCHS="" IOS_ARCHS="x86_64"
 
 install: true
 
@@ -88,3 +79,18 @@ script:
 - export PATH="$PATH:$HOME/.cargo/bin"
 - cd scripts; bash build.sh
 #- cargo build --target=arm-linux-androideabi
+
+before_deploy:
+- export RELEASE_PKG_FILE=$(ls target/*.tar.gz)
+- echo "deploying $RELEASE_PKG_FILE to GitHub releases"
+deploy:
+  provider: releases
+  api_key: $GITHUB_GIT_SERVICE_TOKEN
+  file_glob: true
+  #file: target/openssl-1.1.0c-*.tar.gz
+  file: "${RELEASE_PKG_FILE}"
+  skip_cleanup: true
+  on:
+    tags: true
+after_deploy:
+- echo "deploy $RELEASE_PKG_FILE done"
