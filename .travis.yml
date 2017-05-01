@@ -15,7 +15,6 @@ before_install:
 #- brew cask install android-sdk
 - brew cask install android-ndk
 - ls -l /usr/local/opt/android-ndk/
-- ls -l /usr/local/opt/android-ndk/build/
 - curl https://sh.rustup.rs -sSf | sh -s -- -y
 #- ls -l $HOME/.cargo/bin
 #- rustup target list
