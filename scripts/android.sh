@@ -10,8 +10,8 @@ AND_ARCHS_ARRAY=(${AND_ARCHS})
 ANDROID_API=${ANDROID_API:-22}
 # see: http://stackoverflow.com/questions/11362250/in-bash-how-do-i-test-if-a-variable-is-defined-in-u-mode
 : "${ANDROID_NDK_HOME:=/usr/local/opt/android-ndk}"
-: "${ANDROID_NDK:=/usr/local/opt/android-ndk}"
-NDK="${ANDROID_NDK_HOME}"
+: "${ANDROID_NDK:=/usr/local/opt/android-ndk/android-ndk-r14b}"
+NDK="${ANDROID_NDK}"
 
 function android_configure() {
     # ARCH must expose for build scripts
