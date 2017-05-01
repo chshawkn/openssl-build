@@ -25,4 +25,4 @@ Usage:
 Build a release:
 
     git tag v$version
-    git push v$version
+    git push origin v$version
