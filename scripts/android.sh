@@ -51,12 +51,12 @@ function android_configure() {
         export ARCH_LINK=""
         export TOOL="mipsel-linux-android"
         NDK_FLAGS="--arch=mips"
-    elif [ "$ARCH" == "android-mips64" ]; then
-        export ARCH="linux64-mips64"
-        export ARCH_FLAGS=""
-        export ARCH_LINK=""
-        export TOOL="mips64el-linux-android"
-        NDK_FLAGS="--arch=mips64"
+#    elif [ "$ARCH" == "android-mips64" ]; then
+#        export ARCH="linux64-mips64"
+#        export ARCH_FLAGS=""
+#        export ARCH_LINK=""
+#        export TOOL="mips64el-linux-android"
+#        NDK_FLAGS="--arch=mips64"
     fi;
 
     [ -d ${TOOLCHAIN_ROOT} ] || python $NDK/build/tools/make_standalone_toolchain.py \

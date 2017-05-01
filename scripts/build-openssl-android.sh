@@ -33,15 +33,15 @@ function configure_make() {
     android_configure $*
 
     #support openssl-1.0.x
-    if [[ $LIB_NAME != "openssl-1.1.*" ]]; then
-        if [[ $ARCH == "android-armeabi" ]]; then
-            ARCH="android-armv7"
-        elif [[ $ARCH == "android64" ]]; then 
-            ARCH="linux-x86_64 shared no-ssl2 no-ssl3 no-hw "
-        elif [[ "$ARCH" == "android64-aarch64" ]]; then
-            ARCH="android shared no-ssl2 no-ssl3 no-hw "
-        fi
-    fi
+#    if [[ $LIB_NAME != "openssl-1.1.*" ]]; then
+#        if [[ $ARCH == "android-armeabi" ]]; then
+#            ARCH="android-armv7"
+#        elif [[ $ARCH == "android64" ]]; then
+#            ARCH="linux-x86_64 shared no-ssl2 no-ssl3 no-hw "
+#        elif [[ "$ARCH" == "android64-aarch64" ]]; then
+#            ARCH="android shared no-ssl2 no-ssl3 no-hw "
+#        fi
+#    fi
 
     local PREFIX_DIR="${LIB_DEST_DIR}/${ABI_OR_RUST_ARCH}"
 
