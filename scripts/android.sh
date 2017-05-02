@@ -19,7 +19,11 @@ function android_configure() {
     local ABI_OR_RUST_ARCH=$(abi_or_rust_arch "${ARCH}");
     local CLANG=${3:-""};
 
-    local TOOLCHAIN_ROOT=${TOOLS_ROOT}/android-toolchain-${ABI_OR_RUST_ARCH}
+    local RUST_ANDROID_OS="linux-android"
+    if [[ "${ABI_OR_RUST_ARCH}" == arm* ]]; then
+        RUST_ANDROID_OS="linux-androideabi"
+    fi
+    local TOOLCHAIN_ROOT=${TOOLS_ROOT}/toolchain-${ABI_OR_RUST_ARCH}-${RUST_ANDROID_OS}
 
     if [ "$ARCH" == "android" ]; then
         export ARCH_FLAGS="-mthumb"

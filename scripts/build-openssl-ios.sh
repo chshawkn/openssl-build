@@ -50,7 +50,7 @@ function  configure_make() {
     export CROSS_SDK="${PLATFORM}${SDK_VERSION}.sdk"
     export CC="${DEVELOPER_DIR}/usr/bin/gcc -arch ${ARCH}"
 
-    local PREFIX_DIR="${script_path}/../target/${LIB_NAME}-ios-${ABI_OR_RUST_ARCH}"
+    local PREFIX_DIR="${script_path}/../target/${LIB_NAME}-${ABI_OR_RUST_ARCH}-apple-ios"
     if [ -d "${PREFIX_DIR}" ]; then rm -fr "${PREFIX_DIR}"; fi
     mkdir -p "${PREFIX_DIR}"
 
@@ -91,8 +91,10 @@ function create_universal_lib() {
     local LIB_SRC=$1;
     local LIB_DST=$2;
 
-    LIB_PATHS=( "${IOS_RUST_STYLE_ARCHS[@]/#/${script_path}/../target/${LIB_NAME}-ios-}" )
+    LIB_PATHS=( "${IOS_RUST_STYLE_ARCHS[@]/#/${script_path}/../target/${LIB_NAME}-}" )
+    LIB_PATHS=( "${LIB_PATHS[@]/%/-apple-ios}" )
     LIB_PATHS=( "${LIB_PATHS[@]/%//lib/${LIB_SRC}}" )
+    echo "LIB_PATHS: ${LIB_PATHS[@]}"
     lipo ${LIB_PATHS[@]} -create -output "${LIB_DST}"
 }
 

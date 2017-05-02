@@ -62,7 +62,11 @@ function configure_make() {
         set -e
         echo "make install done. $(pwd)"
 
-        local OUTPUT_ROOT="${TOOLS_ROOT}/../target/${LIB_NAME}-android-${ABI_OR_RUST_ARCH}"
+        local RUST_ANDROID_OS="linux-android"
+        if [[ "${ABI_OR_RUST_ARCH}" == arm* ]]; then
+            RUST_ANDROID_OS="linux-androideabi"
+        fi
+        local OUTPUT_ROOT="${TOOLS_ROOT}/../target/${LIB_NAME}-${ABI_OR_RUST_ARCH}-${RUST_ANDROID_OS}"
         [ -d ${OUTPUT_ROOT}/include ] || mkdir -p ${OUTPUT_ROOT}/include
         cp -r ${PREFIX_DIR}/include/openssl ${OUTPUT_ROOT}/include
 

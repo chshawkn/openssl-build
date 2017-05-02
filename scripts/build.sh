@@ -16,12 +16,13 @@ if [ -z "${AND_ARCHS}" ] && [ -z "${IOS_ARCHS}" ]; then
     brew tap chshawkn/homebrew-brew-tap
     brew install chshawkn/brew-tap/openssl@1.1.0.e
 
-    if [ -d ../target/${LIB_NAME}-darwin64-x86_64 ]; then rm -rf ../target/${LIB_NAME}-darwin64-x86_64; fi
-    mkdir -p ../target/${LIB_NAME}-darwin64-x86_64
-    cp -r /usr/local/Cellar/openssl@1.1.0.e/1.1.0e/* ../target/${LIB_NAME}-darwin64-x86_64/
+    if [ -d ../target/${LIB_NAME}-x86_64-apple-darwin ]; then rm -rf ../target/${LIB_NAME}-x86_64-apple-darwin; fi
+    mkdir -p ../target/${LIB_NAME}-x86_64-apple-darwin
+    cp -r /usr/local/Cellar/openssl@1.1.0.e/1.1.0e/* ../target/${LIB_NAME}-x86_64-apple-darwin/
 
-    rm -f "../target/${LIB_NAME}-darwin64-x86_64.tar.gz"
-    tar czf "../target/${LIB_NAME}-darwin64-x86_64.tar.gz" -C "../target" "${LIB_NAME}-darwin64-x86_64"
+    rm -f "../target/${LIB_NAME}-x86_64-apple-darwin.tar.gz"
+    # create archive by package function
+    #tar czf "../target/${LIB_NAME}-x86_64-apple-darwin.tar.gz" -C "../target" "${LIB_NAME}-x86_64-apple-darwin"
 fi
 
 if [[ ! -v AND_ARCHS ]]; then
@@ -37,13 +38,13 @@ echo "IOS_ARCHS_ARRAY ${#IOS_ARCHS_ARRAY[@]} ${IOS_ARCHS_ARRAY[@]}"
 AND_ARCHS_ARRAY=(${AND_ARCHS})
 echo "AND_ARCHS_ARRAY ${#AND_ARCHS_ARRAY[@]} ${AND_ARCHS_ARRAY[@]}"
 
-source ${script_path}/build-openssl-ios.sh
 source ${script_path}/build-openssl-android.sh
+source ${script_path}/build-openssl-ios.sh
 
-UNIVERSAL_LIB_DIR="${script_path}/../target/${LIB_NAME}-ios-universal"
+UNIVERSAL_LIB_DIR="${script_path}/../target/${LIB_NAME}-universal-apple-ios"
 if [[ $# -eq 0 && ${#IOS_ARCHS_ARRAY[@]} -gt 1 ]]; then
     rm -rf "${UNIVERSAL_LIB_DIR}"
-    mkdir "${UNIVERSAL_LIB_DIR}";
+    mkdir "${UNIVERSAL_LIB_DIR}"
     create_universal_lib "libcrypto.a" "${UNIVERSAL_LIB_DIR}/libcrypto.a"
     create_universal_lib "libssl.a" "${UNIVERSAL_LIB_DIR}/libssl.a"
 fi
