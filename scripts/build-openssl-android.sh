@@ -3,9 +3,9 @@
 set -e
 set -u
 
-#https://www.openssl.org/source/openssl-1.1.0c.tar.gz
+#https://www.openssl.org/source/openssl-1.1.0e.tar.gz
 #: "${LIB_NAME:=openssl-1.0.2k}"
-: "${LIB_NAME:=openssl-1.1.0c}"
+: "${LIB_NAME:=openssl-1.1.0e}"
 #https://github.com/openssl/openssl/archive/OpenSSL_1_1_0c.tar.gz
 #LIB_NAME="OpenSSL_1_1_0c"
 ARCHIVE="${LIB_NAME}.tar.gz"
