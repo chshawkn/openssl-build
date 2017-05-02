@@ -52,6 +52,7 @@ env:
   - RUST_AND_ARCHS="aarch64-linux-android arm-linux-androideabi armv7-linux-androideabi i686-linux-android"
   - RUST_IOS_ARCHS="aarch64-apple-ios armv7-apple-ios armv7s-apple-ios i386-apple-ios x86_64-apple-ios"
   matrix:
+  - AND_ARCHS="" IOS_ARCHS=""
   - AND_ARCHS="android" IOS_ARCHS=""
   - AND_ARCHS="android-armeabi" IOS_ARCHS=""
   #- AND_ARCHS="android-mips" IOS_ARCHS=""
