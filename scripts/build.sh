@@ -30,22 +30,22 @@ fi
 if [[ ! -v IOS_ARCHS ]]; then
     : "${IOS_ARCHS:=arm64 armv7 armv7s i386 x86_64}"
 fi
+
 : "${IOS_SDK_VERSION:=10.3}"
+IOS_ARCHS_ARRAY=(${IOS_ARCHS})
+echo "IOS_ARCHS_ARRAY ${#IOS_ARCHS_ARRAY[@]} ${IOS_ARCHS_ARRAY[@]}"
+AND_ARCHS_ARRAY=(${AND_ARCHS})
+echo "AND_ARCHS_ARRAY ${#AND_ARCHS_ARRAY[@]} ${AND_ARCHS_ARRAY[@]}"
 
-#IOS_ARCHS_ARRAY=(${IOS_ARCHS})
-#echo "IOS_ARCHS_ARRAY ${#IOS_ARCHS_ARRAY[@]} ${IOS_ARCHS_ARRAY[@]}"
-#AND_ARCHS_ARRAY=(${AND_ARCHS})
-#echo "AND_ARCHS_ARRAY ${#AND_ARCHS_ARRAY[@]} ${AND_ARCHS_ARRAY[@]}"
-#
-#source ${script_path}/build-openssl-ios.sh
-#source ${script_path}/build-openssl-android.sh
-#
-#UNIVERSAL_LIB_DIR="${script_path}/../target/${LIB_NAME}-ios-universal"
-#if [[ $# -eq 0 && ${#IOS_ARCHS_ARRAY[@]} -gt 1 ]]; then
-#    rm -rf "${UNIVERSAL_LIB_DIR}"
-#    mkdir "${UNIVERSAL_LIB_DIR}";
-#    create_universal_lib "libcrypto.a" "${UNIVERSAL_LIB_DIR}/libcrypto.a"
-#    create_universal_lib "libssl.a" "${UNIVERSAL_LIB_DIR}/libssl.a"
-#fi
+source ${script_path}/build-openssl-ios.sh
+source ${script_path}/build-openssl-android.sh
 
-#(cd ../target; package "." "${LIB_NAME}"; ls -l .;)
+UNIVERSAL_LIB_DIR="${script_path}/../target/${LIB_NAME}-ios-universal"
+if [[ $# -eq 0 && ${#IOS_ARCHS_ARRAY[@]} -gt 1 ]]; then
+    rm -rf "${UNIVERSAL_LIB_DIR}"
+    mkdir "${UNIVERSAL_LIB_DIR}";
+    create_universal_lib "libcrypto.a" "${UNIVERSAL_LIB_DIR}/libcrypto.a"
+    create_universal_lib "libssl.a" "${UNIVERSAL_LIB_DIR}/libssl.a"
+fi
+
+(cd ../target; package "." "${LIB_NAME}"; ls -l .;)
