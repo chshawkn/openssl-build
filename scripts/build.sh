@@ -33,10 +33,10 @@ if [[ ! -v IOS_ARCHS ]]; then
 fi
 
 : "${IOS_SDK_VERSION:=10.3}"
-IOS_ARCHS_ARRAY=(${IOS_ARCHS})
-echo "IOS_ARCHS_ARRAY ${#IOS_ARCHS_ARRAY[@]} ${IOS_ARCHS_ARRAY[@]}"
 AND_ARCHS_ARRAY=(${AND_ARCHS})
 echo "AND_ARCHS_ARRAY ${#AND_ARCHS_ARRAY[@]} ${AND_ARCHS_ARRAY[@]}"
+IOS_ARCHS_ARRAY=(${IOS_ARCHS})
+echo "IOS_ARCHS_ARRAY ${#IOS_ARCHS_ARRAY[@]} ${IOS_ARCHS_ARRAY[@]}"
 
 source ${script_path}/build-openssl-android.sh
 source ${script_path}/build-openssl-ios.sh
