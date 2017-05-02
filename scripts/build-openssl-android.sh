@@ -45,11 +45,17 @@ function configure_make() {
 
     local PREFIX_DIR="${LIB_DEST_DIR}/${ABI_OR_RUST_ARCH}"
 
+#    ./Configure $ARCH \
+#        --prefix=${PREFIX_DIR} \
+#        --with-zlib-include=$SYSROOT/usr/include \
+#        --with-zlib-lib=$SYSROOT/usr/lib \
+#        zlib \
+#        no-asm \
+#        no-shared \
+#        no-unit-test | ${FILTER}
     ./Configure $ARCH \
         --prefix=${PREFIX_DIR} \
-        --with-zlib-include=$SYSROOT/usr/include \
-        --with-zlib-lib=$SYSROOT/usr/lib \
-        zlib \
+        no-comp \
         no-asm \
         no-shared \
         no-unit-test | ${FILTER}

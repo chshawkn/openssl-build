@@ -55,11 +55,11 @@ function  configure_make() {
     mkdir -p "${PREFIX_DIR}"
 
     if [[ "${ARCH}" == "x86_64" ]]; then
-        ./Configure darwin64-x86_64-cc --prefix="${PREFIX_DIR}" | ${FILTER}
+        ./Configure darwin64-x86_64-cc no-comp --prefix="${PREFIX_DIR}" | ${FILTER}
     elif [[ "${ARCH}" == "i386" ]]; then
-        ./Configure darwin-i386-cc --prefix="${PREFIX_DIR}" | ${FILTER}
+        ./Configure darwin-i386-cc no-comp --prefix="${PREFIX_DIR}" | ${FILTER}
     else
-        ./Configure iphoneos-cross --prefix="${PREFIX_DIR}" | ${FILTER}
+        ./Configure iphoneos-cross no-comp --prefix="${PREFIX_DIR}" | ${FILTER}
     fi
     if [ ! -d "${CROSS_TOP}/SDKs/${CROSS_SDK}" ]; then
         echo "error SDK ${CROSS_TOP}/SDKs/${CROSS_SDK} not found."
