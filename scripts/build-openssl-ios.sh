@@ -26,6 +26,15 @@ FILTER="${script_path}/filter"
 #    xcode-select --install
 #fi
 
+xcode_major=$(xcodebuild -version|egrep '^Xcode '|cut -d' ' -f2|cut -d. -f1)
+if [ $xcode_major -ge 8 ]; then
+  export IOS_SIMULATOR_VERSION_MIN=${IOS_SIMULATOR_VERSION_MIN-"6.0.0"}
+  export IOS_VERSION_MIN=${IOS_VERSION_MIN-"6.0.0"}
+else
+  export IOS_SIMULATOR_VERSION_MIN=${IOS_SIMULATOR_VERSION_MIN-"5.1.1"}
+  export IOS_VERSION_MIN=${IOS_VERSION_MIN-"5.1.1"}
+fi
+
 # Unarchive library, then configure and make for specified architectures
 function  configure_make() {
     local ARCH=$1
@@ -50,9 +59,33 @@ function  configure_make() {
     export CROSS_SDK="${PLATFORM}${SDK_VERSION}.sdk"
     export CC="${DEVELOPER_DIR}/usr/bin/gcc -arch ${ARCH}"
 
+    if [ ! -d "${CROSS_TOP}/SDKs/${CROSS_SDK}" ]; then
+        echo "error SDK ${CROSS_TOP}/SDKs/${CROSS_SDK} not found."
+        exit 1
+    fi
+
     local PREFIX_DIR="${script_path}/../target/${LIB_NAME}-${ABI_OR_RUST_ARCH}-apple-ios"
     if [ -d "${PREFIX_DIR}" ]; then rm -fr "${PREFIX_DIR}"; fi
     mkdir -p "${PREFIX_DIR}"
+
+    if [[ "${ARCH}" == "arm64" ]]; then
+        CFLAGS="-O2 -arch arm64 -mios-version-min=${IOS_VERSION_MIN}"
+        LDFLAGS="-arch arm64 -mios-version-min=${IOS_VERSION_MIN}"
+    elif [[ "${ARCH}" == "armv7" ]]; then
+        CFLAGS="-O2 -mthumb -arch armv7 -mios-version-min=${IOS_VERSION_MIN}"
+        LDFLAGS="-mthumb -arch armv7 -mios-version-min=${IOS_VERSION_MIN}"
+    elif [[ "${ARCH}" == "armv7s" ]]; then
+        CFLAGS="-O2 -mthumb -arch armv7s -mios-version-min=${IOS_VERSION_MIN}"
+        LDFLAGS="-mthumb -arch armv7s -mios-version-min=${IOS_VERSION_MIN}"
+    elif [[ "${ARCH}" == "i386" ]]; then
+        CFLAGS="-O2 -arch i386 -mios-simulator-version-min=${IOS_SIMULATOR_VERSION_MIN}"
+        LDFLAGS="-arch i386 -mios-simulator-version-min=${IOS_SIMULATOR_VERSION_MIN}"
+    elif [[ "${ARCH}" == "x86_64" ]]; then
+        CFLAGS="-O2 -arch x86_64 -mios-simulator-version-min=${IOS_SIMULATOR_VERSION_MIN}"
+        LDFLAGS="-arch x86_64 -mios-simulator-version-min=${IOS_SIMULATOR_VERSION_MIN}"
+    fi
+    export CFLAGS="${CFLAGS} -isysroot ${CROSS_TOP}/SDKs/${CROSS_SDK} -flto"
+    export LDFLAGS="${LDFLAGS} -isysroot ${CROSS_TOP}/SDKs/${CROSS_SDK} -flto"
 
     if [[ "${ARCH}" == "x86_64" ]]; then
         ./Configure darwin64-x86_64-cc no-comp --prefix="${PREFIX_DIR}" | ${FILTER}
@@ -61,13 +94,8 @@ function  configure_make() {
     else
         ./Configure iphoneos-cross no-comp --prefix="${PREFIX_DIR}" | ${FILTER}
     fi
-    if [ ! -d "${CROSS_TOP}/SDKs/${CROSS_SDK}" ]; then
-        echo "error SDK ${CROSS_TOP}/SDKs/${CROSS_SDK} not found."
-        exit 1
-    fi
-    export CFLAGS="-isysroot ${CROSS_TOP}/SDKs/${CROSS_SDK}"
 
-    if make -j8 | ${FILTER}; then
+    if make -j16 | ${FILTER}; then
         echo "make done. $(pwd)"
         set +e
         make install | ${FILTER}
