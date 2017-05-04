@@ -43,7 +43,7 @@ echo "IOS_ARCHS_ARRAY ${#IOS_ARCHS_ARRAY[@]} ${IOS_ARCHS_ARRAY[@]}"
 source ${script_path}/build-openssl-ios.sh
 
 UNIVERSAL_LIB_DIR="${script_path}/../target/${LIB_NAME}-universal-apple-ios"
-if [[ $# -eq 0 && ${#IOS_ARCHS_ARRAY[@]} -gt 1 ]]; then
+if [[ $# -eq 0 && ${#IOS_ARCHS_ARRAY[@]} -eq 5 ]]; then
     rm -rf "${UNIVERSAL_LIB_DIR}"
     mkdir "${UNIVERSAL_LIB_DIR}"
     create_universal_lib "libcrypto.a" "${UNIVERSAL_LIB_DIR}/libcrypto.a"

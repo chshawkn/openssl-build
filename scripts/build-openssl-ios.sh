@@ -40,7 +40,6 @@ function  configure_make() {
     local ARCH=$1
     local SDK_VERSION=$2
     local ABI_OR_RUST_ARCH=$(abi_or_rust_arch "${ARCH}");
-    local SDK="iphoneos"
     local PLATFORM="iPhoneOS"
 
     if [ -d "${LIB_NAME}" ]; then rm -rf "${LIB_NAME}"; fi
@@ -49,7 +48,6 @@ function  configure_make() {
     pushd .; cd "${LIB_NAME}";
 
     if [[ "${ARCH}" == "i386" || "${ARCH}" == "x86_64" ]]; then
-        SDK="iphonesimulator"
         PLATFORM="iPhoneSimulator"
     else
         sed -ie "s!static volatile sig_atomic_t intr_signal;!static volatile intr_signal;!" "crypto/ui/ui_openssl.c"
