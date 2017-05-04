@@ -7,9 +7,8 @@ set -e
 echo "building ${LIB_NAME}"
 
 source common.sh
-#export script_path="${script_path}/scripts"
 
-source ${script_path}/package.sh
+source ${SCRIPT_PATH}/package.sh
 
 # build-openssl-darwin.sh
 if [ -z "${AND_ARCHS}" ] && [ -z "${IOS_ARCHS}" ]; then
@@ -39,16 +38,16 @@ IOS_ARCHS_ARRAY=(${IOS_ARCHS})
 echo "IOS_ARCHS_ARRAY ${#IOS_ARCHS_ARRAY[@]} ${IOS_ARCHS_ARRAY[@]}"
 
 # use child process to prevent variable leak from android build to ios build.
-#(source ${script_path}/build-openssl-android.sh)
-source ${script_path}/build-openssl-ios.sh
+(source ${SCRIPT_PATH}/build-openssl-android.sh)
+source ${SCRIPT_PATH}/build-openssl-ios.sh
 
-UNIVERSAL_LIB_DIR="${script_path}/../target/${LIB_NAME}-universal-apple-ios"
+UNIVERSAL_LIB_DIR="${SCRIPT_PATH}/../target/${LIB_NAME}-universal-apple-ios"
 if [[ $# -eq 0 && ${#IOS_ARCHS_ARRAY[@]} -eq 5 ]]; then
     rm -rf "${UNIVERSAL_LIB_DIR}"
     mkdir "${UNIVERSAL_LIB_DIR}"
     create_universal_lib "libcrypto.a" "${UNIVERSAL_LIB_DIR}"
     create_universal_lib "libssl.a" "${UNIVERSAL_LIB_DIR}"
-    cp -r -- "${script_path}/../target/${LIB_NAME}-armv7-apple-ios/include" "${UNIVERSAL_LIB_DIR}/"
+    cp -r -- "${SCRIPT_PATH}/../target/${LIB_NAME}-armv7-apple-ios/include" "${UNIVERSAL_LIB_DIR}/"
 fi
 
 (cd ../target; package "." "${LIB_NAME}"; ls -l .;)

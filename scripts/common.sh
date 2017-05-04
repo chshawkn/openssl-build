@@ -6,9 +6,8 @@ while [ -h "$SOURCE" ]; do
     SOURCE="$(readlink "$SOURCE")"
     [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
 done
-export script_path="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
-echo "script_path: ${script_path}"
-
+export SCRIPT_PATH="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+echo "SCRIPT_PATH: ${SCRIPT_PATH}"
 
 function abi_or_rust_arch() {
     local arch="$1"

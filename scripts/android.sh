@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 source ./common.sh
-TOOLS_ROOT="${script_path}/../target"
+TOOLS_ROOT="${SCRIPT_PATH}/../target"
 if [[ ! -v AND_ARCHS ]]; then
     : "${AND_ARCHS:=android android-armeabi android64-aarch64 android-x86 android64 android-mips android-mips64}"
 fi

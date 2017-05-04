@@ -19,7 +19,7 @@ if [[ ! -v IOS_ARCHS ]]; then
     : "${IOS_ARCHS:=arm64 armv7s armv7 i386 x86_64}"
 fi
 DEVELOPER_DIR="/Applications/Xcode.app/Contents/Developer"
-FILTER="${script_path}/filter"
+FILTER="${SCRIPT_PATH}/filter"
 
 #DEVELOPER_COMMAND_LINE_TOOLS=`xcode-select -print-path`
 #if [ ! -f ${DEVELOPER_COMMAND_LINE_TOOLS}/usr/bin/xcrun ]; then
@@ -62,7 +62,7 @@ function  configure_make() {
         exit 1
     fi
 
-    local PREFIX_DIR="${script_path}/../target/${LIB_NAME}-${ABI_OR_RUST_ARCH}-apple-ios"
+    local PREFIX_DIR="${SCRIPT_PATH}/../target/${LIB_NAME}-${ABI_OR_RUST_ARCH}-apple-ios"
     if [ -d "${PREFIX_DIR}" ]; then rm -fr "${PREFIX_DIR}"; fi
     mkdir -p "${PREFIX_DIR}"
 
@@ -117,7 +117,7 @@ function create_universal_lib() {
     local LIB_SRC=$1;
     local LIB_DST=$2;
 
-    LIB_PATHS=( "${IOS_RUST_STYLE_ARCHS[@]/#/${script_path}/../target/${LIB_NAME}-}" )
+    LIB_PATHS=( "${IOS_RUST_STYLE_ARCHS[@]/#/${SCRIPT_PATH}/../target/${LIB_NAME}-}" )
     LIB_PATHS=( "${LIB_PATHS[@]/%/-apple-ios}" )
     LIB_PATHS=( "${LIB_PATHS[@]/%//lib/${LIB_SRC}}" )
     echo "LIB_PATHS: ${LIB_PATHS[@]}"

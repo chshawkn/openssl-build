@@ -17,7 +17,7 @@ ARCHIVE_URL="https://www.openssl.org/source/${ARCHIVE}"
 source ./android.sh
 LIB_DEST_DIR=${TOOLS_ROOT}/libs
 [ -d ${LIB_DEST_DIR} ] && rm -rf ${LIB_DEST_DIR}
-FILTER="${script_path}/filter"
+FILTER="${SCRIPT_PATH}/filter"
 
 # Unarchive library, then configure and make for specified architectures
 function configure_make() {
