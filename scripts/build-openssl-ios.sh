@@ -121,7 +121,8 @@ function create_universal_lib() {
     LIB_PATHS=( "${LIB_PATHS[@]/%/-apple-ios}" )
     LIB_PATHS=( "${LIB_PATHS[@]/%//lib/${LIB_SRC}}" )
     echo "LIB_PATHS: ${LIB_PATHS[@]}"
-    lipo ${LIB_PATHS[@]} -create -output "${LIB_DST}"
+    mkdir -p "${LIB_DST}/lib"
+    lipo ${LIB_PATHS[@]} -create -output "${LIB_DST}/lib/${LIB_SRC}"
 }
 
 : "${IOS_SDK_VERSION:=10.3}"
