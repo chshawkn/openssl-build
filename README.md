@@ -1,6 +1,6 @@
 # openssl-build
 
-Build openssl
+Build openssl for android and ios.
 
     cd scripts
     ./build-openssl-ios.sh
