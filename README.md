@@ -1,5 +1,7 @@
 # openssl-build
 
+Inspired by: https://github.com/leenjewel/openssl_for_ios_and_android
+
 Build openssl for android and ios.
 
     cd scripts
