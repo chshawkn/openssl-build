@@ -28,11 +28,15 @@ FILTER="${SCRIPT_PATH}/filter"
 
 xcode_major=$(xcodebuild -version|egrep '^Xcode '|cut -d' ' -f2|cut -d. -f1)
 if [ $xcode_major -ge 8 ]; then
-  export IOS_SIMULATOR_VERSION_MIN=${IOS_SIMULATOR_VERSION_MIN-"6.0.0"}
-  export IOS_VERSION_MIN=${IOS_VERSION_MIN-"6.0.0"}
+  #export IOS_SIMULATOR_VERSION_MIN=${IOS_SIMULATOR_VERSION_MIN-"6.0.0"}
+  export IOS_SIMULATOR_VERSION_MIN=${IOS_SIMULATOR_VERSION_MIN-"7.0.0"}
+  #export IOS_VERSION_MIN=${IOS_VERSION_MIN-"6.0.0"}
+  export IOS_VERSION_MIN=${IOS_VERSION_MIN-"7.0.0"}
 else
-  export IOS_SIMULATOR_VERSION_MIN=${IOS_SIMULATOR_VERSION_MIN-"5.1.1"}
-  export IOS_VERSION_MIN=${IOS_VERSION_MIN-"5.1.1"}
+  #export IOS_SIMULATOR_VERSION_MIN=${IOS_SIMULATOR_VERSION_MIN-"5.1.1"}
+  export IOS_SIMULATOR_VERSION_MIN=${IOS_SIMULATOR_VERSION_MIN-"7.0.0"}
+  #export IOS_VERSION_MIN=${IOS_VERSION_MIN-"5.1.1"}
+  export IOS_VERSION_MIN=${IOS_VERSION_MIN-"7.0.0"}
 fi
 
 # Unarchive library, then configure and make for specified architectures
