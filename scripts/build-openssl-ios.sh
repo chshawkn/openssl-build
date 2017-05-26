@@ -55,7 +55,8 @@ function  configure_make() {
 
     export CROSS_TOP="${DEVELOPER_DIR}/Platforms/${PLATFORM}.platform/Developer"
     export CROSS_SDK="${PLATFORM}${SDK_VERSION}.sdk"
-    export CC="${DEVELOPER_DIR}/usr/bin/gcc -arch ${ARCH}"
+    #export CC="${DEVELOPER_DIR}/usr/bin/gcc -arch ${ARCH}"
+    export CC="$(xcrun --sdk iphoneos -f cc) -arch ${ARCH} -mios-version-min=${IOS_VERSION_MIN}"
 
     if [ ! -d "${CROSS_TOP}/SDKs/${CROSS_SDK}" ]; then
         echo "error SDK ${CROSS_TOP}/SDKs/${CROSS_SDK} not found."
@@ -67,20 +68,22 @@ function  configure_make() {
     mkdir -p "${PREFIX_DIR}"
 
     if [[ "${ARCH}" == "arm64" ]]; then
-        CFLAGS="-O2 -arch arm64 -mios-version-min=${IOS_VERSION_MIN}"
-        LDFLAGS="-arch arm64 -mios-version-min=${IOS_VERSION_MIN}"
+        CFLAGS="-O2 -arch ${ARCH} -mios-version-min=${IOS_VERSION_MIN}"
+        LDFLAGS="-arch ${ARCH} -mios-version-min=${IOS_VERSION_MIN}"
     elif [[ "${ARCH}" == "armv7" ]]; then
-        CFLAGS="-O2 -mthumb -arch armv7 -mios-version-min=${IOS_VERSION_MIN}"
-        LDFLAGS="-mthumb -arch armv7 -mios-version-min=${IOS_VERSION_MIN}"
+        CFLAGS="-O2 -mthumb -arch ${ARCH} -mios-version-min=${IOS_VERSION_MIN}"
+        LDFLAGS="-mthumb -arch ${ARCH} -mios-version-min=${IOS_VERSION_MIN}"
     elif [[ "${ARCH}" == "armv7s" ]]; then
-        CFLAGS="-O2 -mthumb -arch armv7s -mios-version-min=${IOS_VERSION_MIN}"
-        LDFLAGS="-mthumb -arch armv7s -mios-version-min=${IOS_VERSION_MIN}"
+        CFLAGS="-O2 -mthumb -arch ${ARCH} -mios-version-min=${IOS_VERSION_MIN}"
+        LDFLAGS="-mthumb -arch ${ARCH} -mios-version-min=${IOS_VERSION_MIN}"
     elif [[ "${ARCH}" == "i386" ]]; then
-        CFLAGS="-O2 -arch i386 -mios-simulator-version-min=${IOS_SIMULATOR_VERSION_MIN}"
-        LDFLAGS="-arch i386 -mios-simulator-version-min=${IOS_SIMULATOR_VERSION_MIN}"
+        export CC="$(xcrun --sdk iphonesimulator -f cc) -arch ${ARCH} -mios-simulator-version-min=${IOS_SIMULATOR_VERSION_MIN}"
+        CFLAGS="-O2 -arch ${ARCH} -mios-simulator-version-min=${IOS_SIMULATOR_VERSION_MIN}"
+        LDFLAGS="-arch ${ARCH} -mios-simulator-version-min=${IOS_SIMULATOR_VERSION_MIN}"
     elif [[ "${ARCH}" == "x86_64" ]]; then
-        CFLAGS="-O2 -arch x86_64 -mios-simulator-version-min=${IOS_SIMULATOR_VERSION_MIN}"
-        LDFLAGS="-arch x86_64 -mios-simulator-version-min=${IOS_SIMULATOR_VERSION_MIN}"
+        export CC="$(xcrun --sdk iphonesimulator -f cc) -arch ${ARCH} -mios-simulator-version-min=${IOS_SIMULATOR_VERSION_MIN}"
+        CFLAGS="-O2 -arch ${ARCH} -mios-simulator-version-min=${IOS_SIMULATOR_VERSION_MIN}"
+        LDFLAGS="-arch ${ARCH} -mios-simulator-version-min=${IOS_SIMULATOR_VERSION_MIN}"
     fi
     export CFLAGS="${CFLAGS} -isysroot ${CROSS_TOP}/SDKs/${CROSS_SDK} -flto"
     export LDFLAGS="${LDFLAGS} -isysroot ${CROSS_TOP}/SDKs/${CROSS_SDK} -flto"
