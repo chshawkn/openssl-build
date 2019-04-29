@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+# filter log output
 while IFS='' read -r LINE
 do
     echo "$LINE" \
